@@ -3,7 +3,6 @@ import { useState } from "react";
 import "../styles/tasklist.scss";
 
 import { FiTrash, FiCheckSquare } from "react-icons/fi";
-import { useEffect } from "react";
 
 interface Task {
   id: number;
@@ -15,20 +14,7 @@ export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState("");
 
-  useEffect(() => {
-    const tasksInLocalStorage = localStorage.getItem("tasks");
-    if (tasksInLocalStorage) {
-      const parsedTasks = JSON.parse(tasksInLocalStorage);
-      setTasks(parsedTasks);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
-
-  function handleCreateNewTask(e: any) {
-    e.preventDefault();
+  function handleCreateNewTask() {
     // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
     if (!newTaskTitle) {
       return;
@@ -71,7 +57,7 @@ export function TaskList() {
       <header>
         <h2>Minhas tasks</h2>
 
-        <form className="input-group">
+        <div className="input-group">
           <input
             type="text"
             placeholder="Adicionar novo todo"
@@ -85,7 +71,7 @@ export function TaskList() {
           >
             <FiCheckSquare size={16} color="#fff" />
           </button>
-        </form>
+        </div>
       </header>
 
       <main>
